@@ -20,7 +20,7 @@ def processData(tree, ext):
         links = tree.xpath("//*[@id='searchresult']/tbody/tr/td[2]/a/@href")
         md5s  = tree.xpath("//*[@id='searchresult']/tbody/tr/td[4]/text()")
     except Exception as e:
-        print("Error: %s." % e)
+        print("Error: %s." % e, file=sys.stderr)
         sys.exit(-1)
     data = []
     for i in range(len(links)):
@@ -40,24 +40,25 @@ def processExtension(ext):
         page = requests.get(url)
         tree = html.fromstring(page.content)
     except Exception as e:
-        print("Error: %s." % e)
+        print("Error: %s." % e, file=sys.stderr)
         sys.exit(-1)
     theData = processData(tree, ext)
     nextButtonXPath = "//*[@id='right-pane']/div[5]/div/ul/li[last()]/a/@href"
     try:
         next = tree.xpath(nextButtonXPath)
     except Exception as e:
-        print("Error: %s." % e)
+        print("Error: %s." % e, file=sys.stderr)
         sys.exit(-1)
     while len(next):
         url = site + next[0]
+        print (url, file=sys.stderr)
         try:
             page = requests.get(url)
             tree = html.fromstring(page.content)
             theData += processData(tree, ext)
             next = tree.xpath(nextButtonXPath)
         except Exception as e:
-            print("Error: %s." % e)
+            print("Error: %s." % e, file=sys.stderr)
             sys.exit(-1)
     return theData
 
@@ -66,7 +67,7 @@ def printTheData(theData, md5only, download):
     try:
         jsonData = json.dumps(theData, indent=4)
     except Exception as e:
-        print("Error: %s." % e)
+        print("Error: %s." % e, file=sys.stderr)
         sys.exit(-1)
     if (not md5only and not download):
         print(jsonData)
@@ -78,7 +79,7 @@ def printTheData(theData, md5only, download):
                 try:
                     filename = wget.download(element["url"], out=(element["md5"].upper() + "." + element["ext"]))
                 except Exception as e:
-                    print("Error: %s." % e)
+                    print("Error: %s." % e, file=sys.stderr)
                     sys.exit(-1)
 
 if __name__ == "__main__":
