@@ -10,7 +10,7 @@ import sys
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.0"
+__VERSION__ = "1.01"
 
 site = "https://wikileaks.org"
 area = "/akp-emails/"
@@ -43,7 +43,8 @@ def processExtension(ext):
         print("Error: %s." % e, file=sys.stderr)
         sys.exit(-1)
     theData = processData(tree, ext)
-    nextButtonXPath = "//*[@id='right-pane']/div[5]/div/ul/li[last()]/a/@href"
+    #nextButtonXPath = "//*[@id='right-pane']/div[5]/div/ul/li[last()]/a/@href"
+    nextButtonXPath  = "//*[@id='right-pane']/div[3]/div/ul/li[last()]/a/@href"
     try:
         next = tree.xpath(nextButtonXPath)
     except Exception as e:
