@@ -10,7 +10,7 @@ import sys
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.01"
+__VERSION__ = "1.02"
 
 site = "https://wikileaks.org"
 area = "/akp-emails/"
@@ -33,8 +33,11 @@ def processData(tree, ext):
             data.append({"md5" : md5s[i], "url" : site + area + links[i], "ext" : ext})
     return data
 
-def processExtension(ext):
-    url = site + area + "?file=" + ext + "&count=200&page=1&#searchresult"
+def processExtension(ext, spam):
+    url = site + area + "?file=" + ext
+    if (spam):
+        url += "&spam=1"
+    url += "&count=200&page=1&#searchresult"
     print(url, file=sys.stderr)
     try:
         page = requests.get(url)
@@ -88,10 +91,11 @@ if __name__ == "__main__":
     parser.add_argument("-v", "--version", action="version", version="%(prog)s version " + __VERSION__)
     parser.add_argument("-m", "--md5only", action="store_true", help="only list the hashes")
     parser.add_argument("-d", "--download", action="store_true", help="download the files")
+    parser.add_argument("-s", "--spam", action="store_true", help="look in the spam folder too")
     parser.add_argument("ext", nargs="+", help="file extension")
     args = parser.parse_args()
     theData = []
     for ext in args.ext:
-        theData += processExtension(ext)
+        theData += processExtension(ext, args.spam)
     printTheData(theData, args.md5only, args.download)
     sys.exit(0)
