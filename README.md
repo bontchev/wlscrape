@@ -47,8 +47,12 @@ Suggested extensions that might contain malware are: `docm`, `exe`, `jar`, `ace`
 
 `-d`, `--download`	The script downloads the files that match the specified extension(s). The files are saved in the current directory with a name equal to their MD5 hash in upper case (and not the original name in the e-mail attachment, in order to prevent different files with the same names from overwriting each other) and extension equal to the matching extension.
 
+`-s`, `--spam`	Look for the specified file extension(s) in the spam folder, too.
+
 ##Change log
 
 Version 1.00	Initial version.
 
 Version 1.01	Wikileaks changed slightly the format of the page and the script was able to process only the first page of a multi-page output. Fixed.
+
+Version 1.02	Implemented the option to check the e-mails marked as spam too.
