@@ -50,3 +50,5 @@ Suggested extensions that might contain malware are: `docm`, `exe`, `jar`, `ace`
 ##Change log
 
 Version 1.00	Initial version.
+
+Version 1.01	Wikileaks changed slightly the format of the page and the script was able to process only the first page of a multi-page output. Fixed.
