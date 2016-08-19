@@ -2,13 +2,13 @@
 
 ##Introduction
 
-[Wikileaks](https://www.wikileaks.org) has released a large set of e-mails leaked from the Turkish party AKP. Unfortunately, no processing of any kind has been performed on these e-mails - they are just a raw dump. Since many of the AKP members have been recipients of malware sent by e-mail (most likely random spam but could have also been targeted attacks), the received malware in the e-mails is also present in the dump. As a result, the Wikileaks site is hosting malware, which leads to various sites like Google and Facebook blocking it. For the record, I consider this to be extremely irresponsible on the part of Wikileaks. Malware distribution is __not__ "journalism" by _any_ definition of the term.
+[Wikileaks](https://www.wikileaks.org) has released a large set of e-mails leaked from the Turkish party AKP. Unfortunately, no processing of any kind has been performed on these e-mails - they are just a raw dump. Since many of the AKP members have been recipients of malware sent by e-mail (most likely random spam but could have also been targeted attacks), the received malware in the e-mails is also present in the dump. As a result, the Wikileaks site is hosting malware. For the record, I consider this to be extremely irresponsible from the part of Wikileaks. Malware distribution is __not__ "journalism" by _any_ definition of the term.
 
 This script was written for the purpose of getting information about the attached files with suspicious extensions, so that they could be scanned - either by downloading them and scanning them locally, or by obtaining their MD5 hashes and submitting those to [VirusTotal](https://www.virustotal.com/).
 
 ##Installation
 
-The script depends on the several Python modules (it should work both in Python 2.6+ and 3.x), which are not part of the default installation, so they have to be installed before the script is able to run. They can all be installed via the command
+The script should work both in Python 2.6+ and 3.x, although I've been using it only with Python 2.7.6. It depends on the several Python modules, which are not part of the default installation, so they have to be installed before the script is able to run. They can all be installed via the command
 
 	pip install module_name
 
@@ -33,7 +33,7 @@ The above is for Windows. If you use a different command shell (e.g., `bash` or 
 
 ##Usage
 
-The script takes as a command-line argument one or more file extensions. It fetches information from the Wikileaks site (and the AKP e-mail dump area on it, in particular) about the e-mail file attachments matching these extensions. By default, it outputs a JSON array containing the URL where the file resides, the MD5 hash of the file, and the extension of the file. The set of output files will be unique by MD5 - that is, no two elements will have the same MD5 hash, even if multiple e-mails containing the file exist on the Wikileaks site (if they do, only the first found URL will be present).
+The script takes as a command-line argument one or more file extensions. It fetches information from the Wikileaks site (and the AKP e-mail dump area on it, in particular) about the e-mail file attachments matching these extensions. By default, it outputs a JSON array containing the URL where the file resides, the MD5 hash of the file, and the extension of the file.
 
 Suggested extensions that might contain malware are: `docm`, `exe`, `jar`, `ace`, `arj`, `cab`, `gz`, `js`, `pps`, `ppt`, `rar`, `rtf`, `pdf`, `zip`. Attention: the `pdf` and `zip` extensions will result in thousands of files!
 
@@ -49,6 +49,10 @@ Suggested extensions that might contain malware are: `docm`, `exe`, `jar`, `ace`
 
 `-s`, `--spam`	Look for the specified file extension(s) in the spam folder, too.
 
+`-p`, `--duplicates`	Search the duplicated e-mails too, whatever Wikileaks means by that.
+
+`-b`, `--blacklist` `BLACKLiST`	Specify a file (`BLACKLIST`) containing one URL per line. The links with these URLs will be ignored.
+
 ##Change log
 
 Version 1.00	Initial version.
@@ -56,3 +60,5 @@ Version 1.00	Initial version.
 Version 1.01	Wikileaks changed slightly the format of the page and the script was able to process only the first page of a multi-page output. Fixed.
 
 Version 1.02	Implemented the option to check the e-mails marked as spam too.
+
+Version 1.03	Removed the code that was ignoring the duplicate files, since the idea is to find _all_ links on the Wikileaks site that contain malware. Added the option to search the duplicated e-mails too, whatever Wikileaks means by that. Added the option to specify a list of links to ignore (e.g., because they no longer point to malware).
