@@ -8,7 +8,7 @@ This script was written for the purpose of getting information about the attache
 
 ##Installation
 
-The script should work both in Python 2.6+ and 3.x, although I've been using it only with Python 2.7.6. It depends on the several Python modules, which are not part of the default installation, so they have to be installed before the script is able to run. They can all be installed via the command
+The script should work both in Python 2.6+ and 3.x, although I've been using it only with Python 2.7.6. It depends on the several Python modules, some which are not part of the default installation, so they will have to be installed before the script is able to run. They can all be installed via the command
 
 	pip install module_name
 
@@ -19,9 +19,12 @@ If you are on Linux and want to install the module system-wide, use
 In particular, the following modules have to be installed:
 
 	lxml
+	argparse
 	requests
 	json
 	wget
+	sys
+	os
 
 In addition, if the script produces bizarre `InsecurePlatform` errors, you should run the command
 
@@ -45,20 +48,28 @@ Suggested extensions that might contain malware are: `docm`, `exe`, `jar`, `ace`
 
 `-m`, `--md5only`	Instead of a JSON array, the script outputs only the MD5 hashes of the files, one per line, in upper case.
 
-`-d`, `--download`	The script downloads the files that match the specified extension(s). The files are saved in the current directory with a name equal to their MD5 hash in upper case (and not the original name in the e-mail attachment, in order to prevent different files with the same names from overwriting each other) and extension equal to the matching extension.
+`-d`, `--download`	The script downloads the files that match the specified extension(s). The files are saved in the with a name equal to their MD5 hash in upper case (and not the original name in the e-mail attachment, in order to prevent different files with the same names from overwriting each other) and extension equal to the matching extension. If there are duplicated files, `(N)` will be appended to the file name, where `N` is the duplicate number. The files are saved in the current directory if there is only one page of search results, or in subdirectories named `000`, `001`, etc., one subdirectory per page of search results. 
 
 `-s`, `--spam`	Look for the specified file extension(s) in the spam folder, too.
 
 `-p`, `--duplicates`	Search the duplicated e-mails too, whatever Wikileaks means by that.
 
+`-u`, `--unique`	Retrieve only the entries unique by MD5.
+
+`-e`, `--elements` N	Number of elements per results page. Must be in the range of [10,200]. Default is 200. Makes sense to use it only with the `-d` option; it will determine the number of downloaded files per subdirectory.
+
 `-b`, `--blacklist` `BLACKLiST`	Specify a file (`BLACKLIST`) containing one URL per line. The links with these URLs will be ignored.
+
+`-a`, `--pages` `PAGES` Specify a list of ranges (e.g., 2-5,7,9-10) of search result pages to process.
 
 ##Change log
 
-Version 1.00	Initial version.
+Version 1.00:	Initial version.
 
-Version 1.01	Wikileaks changed slightly the format of the page and the script was able to process only the first page of a multi-page output. Fixed.
+Version 1.01:	Wikileaks changed slightly the format of the page and the script was able to process only the first page of a multi-page output. Fixed.
 
-Version 1.02	Implemented the option to check the e-mails marked as spam too.
+Version 1.02:	Implemented the option to check the e-mails marked as spam too.
 
-Version 1.03	Removed the code that was ignoring the duplicate files, since the idea is to find _all_ links on the Wikileaks site that contain malware. Added the option to search the duplicated e-mails too, whatever Wikileaks means by that. Added the option to specify a list of links to ignore (e.g., because they no longer point to malware).
+Version 1.03:	Removed the code that was ignoring the duplicate files, since the idea is to find _all_ links on the Wikileaks site that contain malware. Added the option to search the duplicated e-mails too, whatever Wikileaks means by that. Added the option to specify a list of links to ignore (e.g., because they no longer point to malware).
+
+Version 1.04:	Implemented the option to retrieve only files unique by MD5. If there is more than one, only the first one found will be listed. Implemented the option to specify which pages of the search results to process. Implemented the option to specify the number of entries per page of search results.
