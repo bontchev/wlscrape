@@ -34,6 +34,10 @@ The above is for Windows. If you use a different command shell (e.g., `bash` or 
 
 	sudo pip install requests\[security\]
 
+On some Linux systems this might not be enough. If, after doing it, you're still getting bizarre SSL-related errors, run the following command:
+
+	sudo pip install pyopenssl ndg-httpsclient pyasn1 --upgrade
+
 ##Usage
 
 The script takes as a command-line argument one or more file extensions. It fetches information from the Wikileaks site (and the AKP e-mail dump area on it, in particular) about the e-mail file attachments matching these extensions. By default, it outputs a JSON array containing the URL where the file resides, the MD5 hash of the file, and the extension of the file.
