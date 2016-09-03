@@ -16,6 +16,10 @@ The script takes as one or more arguments on the command line JSON-formatted fil
 
 The script takes as one or more arguments on the command line JSON-formatted files that have been created by saving the standard output of `wlscrape.py`. It outputs only the MD5 hash of each entry, one hash per line, converted to upper case, ready for [VTScan](https://github.com/hasherezade/mal_sort/tree/master/vtscan) to submit them to [VirusTotal](https://www.virustotal.com/). The result is equivalent to running `wlscrape.py` with the option `--md5only` (or `-m`) but this script is handy if you have already run `wlscrape.py`, have produced JSON-formatted data, and need just the list of MD5 hashes without having to scrape the [Wikileaks](https://www.wikileaks.org) site again.
 
+##sortsize.py
+
+The script takes as one or more arguments on the command line JSON-formatted files that have been created by saving the standard output of `wlscrape.py`. It outputs the combined JSON-formatted information sorted by the "size" key.
+
 #wlget.py
 
 The script takes as one or more arguments on the command line JSON-formatted files that have been created by saving the standard output of `wlscrape.py`. It downloads the files from the [Wikileaks](https://www.wikileaks.org) site that are described in the JSON data. This script is useful when you have already obtained the necessary JSON-formatted file information by running `wlscrape.py` with the appropriate options and want to just download the files, without searching the [Wikileaks](https://www.wikileaks.org) site again. If two or more entries share the same MD5 hash, only the first one will be used. If the `-e` option is used, it must be followed by an integer number `N`, greater than zero. Then the downloaded files will be split into subdirectories (named `000`, `001`, etc.), with no more than `N` files per subdirectory. If no option is specified, the files are downloaded to the current directory.
