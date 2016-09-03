@@ -18,9 +18,10 @@ If you are on Linux and want to install the module system-wide, use
 
 In particular, the following modules have to be installed:
 
-	lxml
+	itertools
 	argparse
 	requests
+	lxml
 	json
 	wget
 	sys
