@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 from lxml import html
+import itertools
 import argparse
 import requests
 import json
@@ -11,7 +12,7 @@ import os
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.04"
+__VERSION__ = "1.05"
 
 site = "https://wikileaks.org"
 area = "/akp-emails/"
@@ -23,6 +24,7 @@ def error(e):
 def processData(tree, ext, blacklist):
     try:
         links = tree.xpath("//*[@id='searchresult']/tbody/tr/td[2]/a/@href")
+        sizes = tree.xpath("//*[@id='searchresult']/tbody/tr/td[3]/text()")
         md5s  = tree.xpath("//*[@id='searchresult']/tbody/tr/td[4]/text()")
     except Exception as e:
         error(e)
@@ -30,7 +32,7 @@ def processData(tree, ext, blacklist):
     for i in range(len(links)):
         theUrl = site + area + links[i]
         if (not theUrl in blacklist):
-            data.append({"md5" : md5s[i], "url" : theUrl, "ext" : ext})
+            data.append({"md5" : md5s[i], "url" : theUrl, "ext" : ext, "size" : sizes[i]})
     return data
 
 def processExtension(ext, blacklist, options):
@@ -126,16 +128,7 @@ def printTheData(theData, options):
         error(e)
 
 def getList(argument):
-    ranges = list(argument.split(","))
-    newRange = []
-    for theRange in ranges:
-        subRange = list(map(int, theRange.split("-")))
-        if (len(subRange) > 1):
-            newRange.extend(range(subRange[0], subRange[1] + 1))
-        else:
-            newRange.extend(subRange)
-    newRange.sort()
-    return newRange
+    return list(set(itertools.chain.from_iterable([range(int(y[0]), int(y[1]) + 1) for y in [(x.split('-') + [x])[:2] for x in argument.split(',')]])))
 
 def main(args):
     theData = []
