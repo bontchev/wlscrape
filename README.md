@@ -77,3 +77,5 @@ Version 1.02:	Implemented the option to check the e-mails marked as spam too.
 Version 1.03:	Removed the code that was ignoring the duplicate files, since the idea is to find _all_ links on the Wikileaks site that contain malware. Added the option to search the duplicated e-mails too, whatever Wikileaks means by that. Added the option to specify a list of links to ignore (e.g., because they no longer point to malware).
 
 Version 1.04:	Implemented the option to retrieve only files unique by MD5. If there is more than one, only the first one found will be listed. Implemented the option to specify which pages of the search results to process. Implemented the option to specify the number of entries per page of search results.
+
+Version 1.05:	The JSON data now includes file size information. Slightly improved the parsing of user-specified ranges when the `-a` option is used.
