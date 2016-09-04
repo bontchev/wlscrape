@@ -12,7 +12,7 @@ import os
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.05"
+__VERSION__ = "1.06"
 
 site = "https://wikileaks.org"
 area = "/akp-emails/"
@@ -117,12 +117,12 @@ def printTheData(theData, options):
                 if (download):
                     fileName = md5 + "." + element["ext"]
                     if (paginate):
-                        fileName = os.path.join(outputDir, fileName)
                         elementNum += 1
-                        if (elementNum >= elementsPerPage):
+                        if (elementNum > elementsPerPage):
                             elementNum = 0
                             pageNum += 1
                             outputDir = makeOutputDir(pageNum)
+                        fileName = os.path.join(outputDir, fileName)
                     outputFile = wget.download(element["url"], out=fileName)
     except Exception as e:
         error(e)
