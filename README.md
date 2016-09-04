@@ -80,3 +80,5 @@ Version 1.03:	Removed the code that was ignoring the duplicate files, since the 
 Version 1.04:	Implemented the option to retrieve only files unique by MD5. If there is more than one, only the first one found will be listed. Implemented the option to specify which pages of the search results to process. Implemented the option to specify the number of entries per page of search results.
 
 Version 1.05:	The JSON data now includes file size information. Slightly improved the parsing of user-specified ranges when the `-a` option is used.
+
+Version 1.06:	Fixed a minor bug leading to the creation of one unnecessary directory when the number of files to download was an exact multiple of the argument of the `-e` option.
