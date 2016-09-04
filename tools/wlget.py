@@ -10,7 +10,7 @@ import os
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.00"
+__VERSION__ = "1.01"
 
 def error(e):
     print("Error: %s." % e, file=sys.stderr)
@@ -42,12 +42,12 @@ def downloadTheData(theData, elementsPerDir):
                 seen.add(hash)
                 fileName = hash + "." + element["ext"]
                 if (paginate):
-                    fileName = os.path.join(outputDir, fileName)
                     elementNum += 1
-                    if (elementNum >= elementsPerDir):
+                    if (elementNum > elementsPerDir):
                         elementNum = 0
                         pageNum += 1
                         outputDir = makeOutputDir(pageNum)
+                    fileName = os.path.join(outputDir, fileName)
                 outputFile = wget.download(element["url"], out=fileName)
     except Exception as e:
         error(e)
