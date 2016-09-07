@@ -20,6 +20,10 @@ The script takes as one or more arguments on the command line JSON-formatted fil
 
 The script takes as one or more arguments on the command line JSON-formatted files that have been created by saving the standard output of `wlscrape.py`. It outputs the combined JSON-formatted information sorted by the "size" key.
 
+##vtscanhash.py
+
+The script takes as a command-line argument a text file, containing MD5 hashes of potentially malicious files, one hash per line (everything after the first word on the line is ignored) and searches [VirusTotal](https://www.virustotal.com) for each of these hashes. It takes the _mandatory_ command-line option `-k`, followed by a VirusTotal API key. In order to obtain such a key, you need to register at the VirusTotal site, log into your account, click your login name (in the upper right corner of the page) and select "My API key" from the dropdown menu that appears (JavaScript must be enabled in your browser). The option `-r` can be used to specify how often the script should query VirusTotal; the default is 4 times per minute, which is the quota for free (public) API keys.
+
 #wlget.py
 
 The script takes as one or more arguments on the command line JSON-formatted files that have been created by saving the standard output of `wlscrape.py`. It downloads the files from the [Wikileaks](https://www.wikileaks.org) site that are described in the JSON data. This script is useful when you have already obtained the necessary JSON-formatted file information by running `wlscrape.py` with the appropriate options and want to just download the files, without searching the [Wikileaks](https://www.wikileaks.org) site again. If two or more entries share the same MD5 hash, only the first one will be used. If the `-e` option is used, it must be followed by an integer number `N`, greater than zero. Then the downloaded files will be split into subdirectories (named `000`, `001`, etc.), with no more than `N` files per subdirectory. If no option is specified, the files are downloaded to the current directory.
