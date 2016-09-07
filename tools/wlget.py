@@ -10,7 +10,7 @@ import os
 
 __author__ = "Vesselin Bontchev <vbontchev@yahoo.com>"
 __license__ = "GPL"
-__VERSION__ = "1.01"
+__VERSION__ = "1.02"
 
 def error(e):
     print("Error: %s." % e, file=sys.stderr)
@@ -31,10 +31,10 @@ def downloadTheData(theData, elementsPerDir):
         paginate = False
         outputDir = ""
         seen = set()
+        elementNum = 1
         if ((elementsPerDir > 0) and (len(theData) > elementsPerDir)):
             paginate = True
-            pageNum = 0
-            elementNum = 0
+            pageNum = 1
             outputDir = makeOutputDir(pageNum)
         for element in jsonData:
             hash = element["md5"].upper()
@@ -42,13 +42,13 @@ def downloadTheData(theData, elementsPerDir):
                 seen.add(hash)
                 fileName = hash + "." + element["ext"]
                 if (paginate):
-                    elementNum += 1
                     if (elementNum > elementsPerDir):
-                        elementNum = 0
+                        elementNum = 1
                         pageNum += 1
                         outputDir = makeOutputDir(pageNum)
                     fileName = os.path.join(outputDir, fileName)
                 outputFile = wget.download(element["url"], out=fileName)
+                elementNum += 1
     except Exception as e:
         error(e)
 
