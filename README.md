@@ -18,12 +18,15 @@ If you are on Linux and want to install the module system-wide, use
 
 In particular, the following modules have to be installed:
 
+	virustotal
 	itertools
 	argparse
 	requests
+	locale
 	lxml
 	json
 	wget
+	stat
 	sys
 	os
 
@@ -34,10 +37,6 @@ In addition, if the script produces bizarre `InsecurePlatform` errors, you shoul
 The above is for Windows. If you use a different command shell (e.g., `bash` or `zsh` on Linux), you might need to escape the brackets in a different way, e.g.
 
 	sudo pip install requests\[security\]
-
-On some Linux systems this might not be enough. If, after doing it, you're still getting bizarre SSL-related errors, run the following command:
-
-	sudo pip install pyopenssl ndg-httpsclient pyasn1 --upgrade
 
 ##Usage
 
@@ -82,3 +81,5 @@ Version 1.04:	Implemented the option to retrieve only files unique by MD5. If th
 Version 1.05:	The JSON data now includes file size information. Slightly improved the parsing of user-specified ranges when the `-a` option is used.
 
 Version 1.06:	Fixed a minor bug leading to the creation of one unnecessary directory when the number of files to download was an exact multiple of the argument of the `-e` option.
+
+Version 1.07:	Fixed another bug related to downloading a specified number of files per directory.
