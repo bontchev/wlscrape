@@ -2,7 +2,7 @@
 
 ##genreport.py
 
-The script takes two arguments on the command line. The first argument is a JSON-formatted file that has been created by saving the standard output of `wlscape.py`. The second argument is a file, containing a list of MD5 hashes (one per line; only the first word on the line is used) that have been determined to be malware known to at least one of the scanners used by [VirusTotal](https://www.virustotal.com/). The script outputs a markdown-formatted table, ready to be included in a [GitHub report](https://github.com/bontchev/wlscrape/blob/master/malware.md).
+The script takes two arguments on the command line. The first argument is a JSON-formatted file that has been created by saving the standard output of `wlscape.py`. The second argument is a file, containing a list of MD5 hashes (one per line; only the first word on the line is used) that have been determined to be malware known to at least one of the scanners used by [VirusTotal](https://www.virustotal.com/). The script outputs a markdown-formatted table, ready to be included in a [GitHub report](https://github.com/bontchev/wlscrape/blob/master/malware.md). If the option `-m` is specified, the script outputs the report in HTML format instead of in markdown format. If the option `-n` is specified, the script does not create a header for the table in the report. If the `-f` option is specified, the script does not produce a footer for the table in the report. (The latter makes sense only when used together with the `-m` option, otherwise it has no effect.)
 
 ##getnotfound.py
 
